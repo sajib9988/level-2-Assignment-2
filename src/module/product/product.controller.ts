@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import Product from "./product.model";
+import ProductService from "./product.service"; // ProductService ইমপোর্ট
+
 
 const createProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const result = await Product.create(req.body);
+    const result = await ProductService.create(req.body); // Service থেকে create কল
     res.send({
       success: true,
       message: "Product created successfully",
@@ -18,16 +19,25 @@ const createProduct = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+
 const getAllProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const result = await Product.find({});
+    const searchTerm = req.query.searchTerm as string; // সার্চ টার্ম নেওয়া
+    let result;
+
+    if (searchTerm) {
+      result = await ProductService.searchProduct(searchTerm); // সার্চ ফাংশন কল
+    } else {
+      result = await ProductService.getAll(); // সব পণ্য রিটার্ন
+    }
+
     res.send({
       success: true,
-      message: "All Products",
+      message: "Products retrieved successfully",
       result,
     });
   } catch (error: any) {
-    res.send({
+    res.status(500).send({
       success: false,
       message: "Something went wrong",
       error: error.message,
@@ -37,8 +47,8 @@ const getAllProduct = async (req: Request, res: Response): Promise<void> => {
 
 const getSingleProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const id = req.params.id; // Extract the product ID from request parameters
-    const result = await Product.findById(id); // Find the product by ID
+    const id = req.params.id; // পণ্য ID
+    const result = await ProductService.getById(id); // সার্ভিস থেকে ফাংশন কল
 
     if (!result) {
       res.send({
@@ -62,10 +72,11 @@ const getSingleProduct = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+
 const updateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const id = req.params.id; // Extract the product ID from request parameters
-    const result = await Product.findByIdAndUpdate(id, req.body, { new: true }); // Update the product
+    const id = req.params.id;
+    const result = await ProductService.updateById(id, req.body);
 
     if (!result) {
       res.send({
@@ -89,10 +100,11 @@ const updateProduct = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+// পণ্য ডিলিট
 const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const id = req.params.id; // Extract the product ID from request parameters
-    const result = await Product.findByIdAndDelete(id); // Delete the product by ID
+    const id = req.params.id;
+    const result = await ProductService.deleteById(id);
 
     if (!result) {
       res.send({
@@ -106,12 +118,11 @@ const deleteProduct = async (req: Request, res: Response): Promise<void> => {
       success: true,
       message: "Product deleted successfully",
     });
-  }
-    catch (error:any) {
-      res.status(500).send({
-        success: false,
-        message: "Something went wrong",
-        error: error.message,
+  } catch (error: any) {
+    res.status(500).send({
+      success: false,
+      message: "Something went wrong",
+      error: error.message,
     });
   }
 };
