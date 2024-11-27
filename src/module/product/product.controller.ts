@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import ProductService from "./product.service"; // ProductService ইমপোর্ট
+import ProductService from "./product.service"; 
 
 
 const createProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const result = await ProductService.create(req.body); // Service থেকে create কল
+    const result = await ProductService.create(req.body); 
     res.send({
       success: true,
       message: "Product created successfully",
@@ -22,13 +22,13 @@ const createProduct = async (req: Request, res: Response): Promise<void> => {
 
 const getAllProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const searchTerm = req.query.searchTerm as string; // সার্চ টার্ম নেওয়া
+    const searchTerm = req.query.searchTerm as string; 
     let result;
 
     if (searchTerm) {
-      result = await ProductService.searchProduct(searchTerm); // সার্চ ফাংশন কল
+      result = await ProductService.searchProduct(searchTerm); 
     } else {
-      result = await ProductService.getAll(); // সব পণ্য রিটার্ন
+      result = await ProductService.getAll();
     }
 
     res.send({
