@@ -1,4 +1,4 @@
-import { Model } from 'mongoose'
+
 
 export interface IProduct  {
   name: string;

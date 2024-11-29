@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
 import ProductService from "./product.service"; 
 
@@ -95,10 +96,11 @@ const updateProduct = async (req: Request, res: Response): Promise<void> => {
     res.send({
       success: false,
       message: "Something went wrong",
-      error: error.message,
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 };
+
 
 // delete option
 const deleteProduct = async (req: Request, res: Response): Promise<void> => {
@@ -118,6 +120,7 @@ const deleteProduct = async (req: Request, res: Response): Promise<void> => {
       success: true,
       message: "Product deleted successfully",
     });
+
   } catch (error: any) {
     res.status(500).send({
       success: false,

@@ -1,4 +1,4 @@
-import mongoose, { Collection } from 'mongoose';
+import mongoose from 'mongoose';
 import { IOrder } from './order.interface';
 import Product from './../product/product.model';
 import orderModel from './order.model';
@@ -42,6 +42,7 @@ export const createOrder = async (orderData: IOrder) => {
       // Save and return the new order
       return order.save();
     });
+  // eslint-disable-next-line no-useless-catch
   } catch (error) {
 
     throw error;

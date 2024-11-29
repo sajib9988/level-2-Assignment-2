@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import orderService from './order.service';
 
@@ -25,7 +26,7 @@ export const createOrder = async (req: Request, res: Response) => {
     const statusCode = error.message === 'Insufficient stock' ? 400 : 500;
     
     res.status(statusCode).json({
-      message: error.message || 'An unknown error occurred',
+      message: error.message || 'An any error occurred',
       success: false,
       error: {
         name: error.name,
@@ -46,7 +47,7 @@ export const calculateRevenue = async (req: Request, res: Response) => {
     });
   } catch (error:any) {
     res.status(500).json({
-      message: error.message || 'An unknown error occurred',
+      message: error.message || 'An any error occurred',
       success: false,
       error: {
         name: error.name,
@@ -68,7 +69,7 @@ export const getOrderCountAndDetails = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     res.status(500).json({
-      message: error.message || 'An unknown error occurred',
+      message: error.message || 'An any error occurred',
       success: false,
       error: {
         name: error.name,

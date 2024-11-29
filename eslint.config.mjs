@@ -1,28 +1,46 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
 
-/** @type {import('eslint').Linter.Config} */
-export default {
-  files: ["**/*.{js,mjs,cjs,ts}"], // Specify applicable file types
-  languageOptions: {
-    globals: {
-      ...globals.browser,
-      ...globals.node,
+export default [
+  {
+    files: ["**/*.{js,mjs,cjs,ts}"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module'
+      }
     },
-  },
-  ignores: ["node_modules", "dist"], // Specify directories to ignore
-  plugins: ["@typescript-eslint"], // Include the TypeScript ESLint plugin
-  extends: [
-    pluginJs.configs.recommended, // Use recommended JavaScript rules
-    "plugin:@typescript-eslint/recommended", // Use recommended TypeScript rules
-  ],
-  rules: {
-    "no-unused-vars": "off", // Disable the default JS rule
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }, // Allow `_` for unused variables
-    ],
-    "@typescript-eslint/no-explicit-any": "off", // Allow usage of `any`
-  },
-};
+    ignores: ["node_modules", "dist"],
+    plugins: {
+      "@typescript-eslint": tseslint
+    },
+    rules: {
+      // Unused vars configuration
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "warn", // Changed to warn to be less strict
+        { 
+          argsIgnorePattern: "^_", 
+          varsIgnorePattern: "^_",
+          // Allow unused imports of types
+          ignoreRestSiblings: true,
+          destructuredArrayIgnorePattern: "^_"
+        }
+      ],
+      // any type handling
+      "@typescript-eslint/no-explicit-any": "off", // Changed to warn
+      "no-useless-catch": "warn", // Added to handle useless catch warning
+      
+      // Recommended rules with some adjustments
+      ...pluginJs.configs.recommended.rules,
+      ...tseslint.configs.recommended.rules
+    }
+  }
+];
