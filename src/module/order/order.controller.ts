@@ -34,7 +34,7 @@ export const createOrder = async (req: Request, res: Response) => {
     });
   }
 };
-// Revenue Part Controller call to  orderService
+// Revenue Part Controller call to  
 export const calculateRevenue = async (req: Request, res: Response) => {
   try {
     const totalRevenue = await orderService.calculateRevenue();
@@ -56,9 +56,44 @@ export const calculateRevenue = async (req: Request, res: Response) => {
   }
 };
 
+export const getOrderCountAndDetails = async (req: Request, res: Response) => {
+  try {
+    // Call the service to fetch order count and details
+    const { totalOrders, orders } = await orderService.getOrderCountAndDetails();
+
+    res.status(200).json({
+      message: 'Orders fetched successfully',
+      status: true,
+      data: { totalOrders, orders },
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      message: error.message || 'An unknown error occurred',
+      success: false,
+      error: {
+        name: error.name,
+        message: error.message,
+      },
+    });
+  }
+};
+
+  
+
+
+
+
+
+
+
+
+
+
+
 export const orderController = {
     createOrder,
-    calculateRevenue
+    calculateRevenue,
+    getOrderCountAndDetails,
   };
   
 

@@ -48,7 +48,7 @@ const getAllProduct = async (req: Request, res: Response): Promise<void> => {
 const getSingleProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = req.params.id; // পণ্য ID
-    const result = await ProductService.getById(id); // সার্ভিস থেকে ফাংশন কল
+    const result = await ProductService.getById(id);
 
     if (!result) {
       res.send({
@@ -100,7 +100,7 @@ const updateProduct = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-// পণ্য ডিলিট
+// delete option
 const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = req.params.id;

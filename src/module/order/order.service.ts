@@ -58,7 +58,7 @@ export const calculateRevenue = async () => {
   const revenue = await orderModel.aggregate([
     {
       $lookup: {
-        from: 'products', // Assuming the product collection name
+        from: 'products', 
         localField: 'product', 
         foreignField: '_id',
         as: 'productDetails'
@@ -81,11 +81,27 @@ export const calculateRevenue = async () => {
 
   return revenue[0]?.totalRevenue || 0;
 };
+export const getOrderCountAndDetails = async () => {
+  // Fetch all orders and count them
+  const orders = await orderModel
+    .find()
+    .populate('product', 'name price') // Populate product details
+    .select('-__v') 
+    .exec();
 
-// Create the orderService object
-const orderService = {
-  createOrder,
-  calculateRevenue
+  const totalOrders = orders.length;
+
+  return { totalOrders, orders };
 };
 
-export default orderService;
+
+
+
+// Create the orderService object yes
+const orderService = {
+  createOrder,
+  calculateRevenue,
+  getOrderCountAndDetails 
+};
+
+export default orderService; 
