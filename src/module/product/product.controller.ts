@@ -47,7 +47,7 @@ const getAllProduct = async (req: Request, res: Response): Promise<void> => {
 
 const getSingleProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const id = req.params.id; // পণ্য ID
+    const id = req.params.id; 
     const result = await ProductService.getById(id);
 
     if (!result) {

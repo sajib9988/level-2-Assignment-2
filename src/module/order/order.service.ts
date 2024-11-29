@@ -4,55 +4,52 @@ import Product from './../product/product.model';
 import orderModel from './order.model';
 
 // Create a new order
+
 export const createOrder = async (orderData: IOrder) => {
+  // Start a new MongoDB session for transaction management
   const session = await mongoose.startSession();
   
   try {
-    // Start a transaction
-    session.startTransaction();
+    // Use withTransaction to ensure atomic operation (all-or-nothing)
+    return await session.withTransaction(async () => {
+      // Find the product being ordered
+      const product = await Product.findById(orderData.product);
+      
+      // Validate product existence and sufficient quantity
+      if (!product || product.quantity < orderData.quantity) {
+        // Throw error if product doesn't exist or stock is insufficient
+        throw new Error('Invalid product or insufficient stock');
+      }
 
-    // Find the product
-    const product = await Product.findById(orderData.product);
-    if (!product) {
-      throw new Error('Product not found');
-    }
+      // Reduce product quantity based on order amount
+      product.quantity -= orderData.quantity;
+      
+      // Update product's in-stock status
+      // Set to false if quantity reaches zero
+      product.inStock = product.quantity > 0;
+      
+      // Save updated product information
+      await product.save();
 
-    // Check if sufficient stock is available
-    if (product.quantity < orderData.quantity) {
-      throw new Error('Insufficient stock');
-    }
+      // Create new order instance
+      const order = new orderModel({ 
 
-    // Calculate total price
-    const totalPrice = product.price * orderData.quantity;
-
-    // Create the order
-    const order = new orderModel({
-      ...orderData,
-      totalPrice
+        ...orderData, 
+   
+        totalPrice: product.price * orderData.quantity 
+      });
+      
+      // Save and return the new order
+      return order.save();
     });
-
-    // Update product quantity
-    product.quantity -= orderData.quantity;
-    product.inStock = product.quantity > 0;
-
-    // Save the updated product and new order
-    await product.save({ session });
-    const savedOrder = await order.save({ session });
-
-    // Commit the transaction
-    await session.commitTransaction();
-
-    return savedOrder;
   } catch (error) {
-    // Abort the transaction on error
-    await session.abortTransaction();
+
     throw error;
   } finally {
-    // End the session
+ 
     session.endSession();
   }
 };
-
 // Calculate total revenue
 export const calculateRevenue = async () => {
   const revenue = await orderModel.aggregate([
