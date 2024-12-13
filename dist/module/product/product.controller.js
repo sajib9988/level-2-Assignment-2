@@ -57,7 +57,7 @@ const getAllProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 const getSingleProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
+        const id = req.params.productId;
         const result = yield product_service_1.default.getById(id);
         if (!result) {
             res.send({
@@ -82,7 +82,7 @@ const getSingleProduct = (req, res) => __awaiter(void 0, void 0, void 0, functio
 });
 const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
+        const id = req.params.productId;
         const result = yield product_service_1.default.updateById(id, req.body);
         if (!result) {
             res.send({
@@ -108,7 +108,7 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 // delete option
 const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
+        const id = req.params.productId;
         const result = yield product_service_1.default.deleteById(id);
         if (!result) {
             res.send({
