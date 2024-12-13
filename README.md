@@ -25,25 +25,25 @@ Fetch details and summaries of all orders
 Product Management APIs
 Create Product
 
-Endpoint: POST /api/product/create
+Endpoint: POST /api/products/create
 Purpose: Adds a new product to inventory with details like name, price, category, and stock.
 Usage: Used by admins to manage inventory.
 Retrieve All Products
 
-Endpoint: GET /api/product
+Endpoint: GET /api/products
 Purpose: Fetches a list of all products.
 Search: Supports filtering by name, brand, or category using the searchTerm query parameter.
 Retrieve Single Product
 
-Endpoint: GET /api/product/:id
+Endpoint: GET /api/product/:productId
 Purpose: Provides detailed information about a specific product.
 Update Product
 
-Endpoint: PUT /api/product/:id
+Endpoint: PUT /api/product/:productId
 Purpose: Updates an existing product’s details, like price or stock.
 Delete Product
 
-Endpoint: DELETE /api/product/:id
+Endpoint: DELETE /api/product/:productId
 Purpose: Removes a product permanently from the inventory.
 Order Management APIs
 Create Order
@@ -52,11 +52,11 @@ Endpoint: POST /api/order
 Purpose: Places an order, validates stock, updates inventory, and calculates the total price.
 Retrieve All Orders
 
-Endpoint: GET /api/order/count-details
+Endpoint: GET /api/orders/count-details
 Purpose: Fetches all orders, including total count and details.
 Calculate Revenue
 
-Endpoint: GET /api/order/revenue
+Endpoint: GET /api/orders/revenue
 Purpose: Calculates total revenue from all completed orders.
 
 
