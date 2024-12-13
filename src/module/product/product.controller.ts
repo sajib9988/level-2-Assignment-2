@@ -48,7 +48,7 @@ const getAllProduct = async (req: Request, res: Response): Promise<void> => {
 
 const getSingleProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const id = req.params.productId; 
+    const id = req.params.productId ; 
     const result = await ProductService.getById(id);
 
     if (!result) {
