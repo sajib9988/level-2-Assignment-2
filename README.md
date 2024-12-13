@@ -1,3 +1,6 @@
+Stationery-Shop
+
+
 level-2-Assignment-2
 
 
@@ -22,45 +25,47 @@ Fetch details and summaries of all orders
 
 Product Management APIs
 Create Product
-
-Endpoint: POST /api/products/create
+Endpoint: POST /api/products
 Purpose: Adds a new product to inventory with details like name, price, category, and stock.
 Usage: Used by admins to manage inventory.
-Retrieve All Products
 
+Retrieve All Products
 Endpoint: GET /api/products
 Purpose: Fetches a list of all products.
 Search: Supports filtering by name, brand, or category using the searchTerm query parameter.
-Retrieve Single Product
 
+Retrieve Single Product
 Endpoint: GET /api/product/:productId
 Purpose: Provides detailed information about a specific product.
-Update Product
 
+Update Product
 Endpoint: PUT /api/product/:productId
 Purpose: Updates an existing product’s details, like price or stock.
-Delete Product
 
+Delete Product
 Endpoint: DELETE /api/product/:productId
 Purpose: Removes a product permanently from the inventory.
 Order Management APIs
-Create Order
 
+Create Order
 Endpoint: POST /api/order
 Purpose: Places an order, validates stock, updates inventory, and calculates the total price.
-Retrieve All Orders
 
+Retrieve All Orders
 Endpoint: GET /api/orders/count-details
 Purpose: Fetches all orders, including total count and details.
-Calculate Revenue
 
+Calculate Revenue
 Endpoint: GET /api/orders/revenue
 Purpose: Calculates total revenue from all completed orders.
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 5ca1c5f6a40278d11644631add4bc7f46cc3cfe8
 ├── src/
 │   ├── config/
 │   │   └── index.ts          # Environment configuration loader
