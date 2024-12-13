@@ -1,9 +1,12 @@
 import express, { Request, Response } from 'express'
 import productRouter from './module/product/product.route'
 import { orderRoutes } from './module/order/order.route';
-
+import cors from "cors";
 
 const app = express()
+
+
+app.use(cors());
 
 // middleware
 app.use(express.json())
