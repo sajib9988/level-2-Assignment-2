@@ -61,25 +61,6 @@ Purpose: Calculates total revenue from all completed orders.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ├── src/
 │   ├── config/
 │   │   └── index.ts          # Environment configuration loader
