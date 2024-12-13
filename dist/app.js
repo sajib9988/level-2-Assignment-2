@@ -9,8 +9,8 @@ const order_route_1 = require("./module/order/order.route");
 const app = (0, express_1.default)();
 // middleware
 app.use(express_1.default.json());
-app.use('/api/product', product_route_1.default);
-app.use('/api/order', order_route_1.orderRoutes);
+app.use('/api/products', product_route_1.default);
+app.use('/api/orders', order_route_1.orderRoutes);
 app.get('/', (req, res) => {
     res.send({
         status: true,

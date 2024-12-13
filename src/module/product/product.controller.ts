@@ -48,7 +48,7 @@ const getAllProduct = async (req: Request, res: Response): Promise<void> => {
 
 const getSingleProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const id = req.params.id; 
+    const id = req.params.productId; 
     const result = await ProductService.getById(id);
 
     if (!result) {
@@ -76,7 +76,7 @@ const getSingleProduct = async (req: Request, res: Response): Promise<void> => {
 
 const updateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const id = req.params.id;
+    const id = req.params.productId;
     const result = await ProductService.updateById(id, req.body);
 
     if (!result) {
@@ -105,7 +105,7 @@ const updateProduct = async (req: Request, res: Response): Promise<void> => {
 // delete option
 const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const id = req.params.id;
+    const id = req.params.productId;
     const result = await ProductService.deleteById(id);
 
     if (!result) {
