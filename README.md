@@ -1,6 +1,4 @@
 level-2-Assignment-2
-Stationery Shop API 
-
 
 
 This project is a backend application for product inventory and order management built using Node.js, TypeScript, Express, and MongoDB. It is designed to provide a RESTful API for managing products, placing orders, and calculating revenues, ensuring scalability and performance.
